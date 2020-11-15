@@ -6,8 +6,12 @@ from django.urls import reverse
 class Citizen(User):
     contact = models.CharField(max_length=11)
     aadhaar  = models.CharField(max_length=12,null=True,blank=True)
-    bhamashah = models.CharField(max_length=12,null=True,blank=True)
+    #bhamashah = models.CharField(max_length=12,null=True,blank=True)
     birth_date = models.DateField(null = True)
+class Citizen1(models.Model):
+    username=models.CharField(max_length=15)
+    password=models.CharField(max_length=30)
+
 
     class Meta:
         verbose_name = 'Citizen'
@@ -18,4 +22,3 @@ class Citizen(User):
 
     def get_absolute_url(self):
         return reverse("person_detail",kwargs={"id":self.bhamashah})
-

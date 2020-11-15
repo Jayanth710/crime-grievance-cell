@@ -1,0 +1,15 @@
+asgiref==3.3.0
+Django==2.2
+django-braces==1.11.0
+django-crispy-forms==1.7.0
+django-model-utils==4.0.0
+django-turbolinks==0.5.1
+olefile==0.44
+packaging==16.8
+Pillow==8.0.1
+psycopg2==2.8.6
+pyparsing==2.4.7
+python-decouple==3.3
+pytz==2020.4
+six==1.15.0
+sqlparse==0.4.1

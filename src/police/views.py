@@ -2,7 +2,7 @@ from django.http import Http404
 from django.shortcuts import render,get_object_or_404
 from case.models import *
 from .models import *
-import urllib.request, json 
+import urllib.request, json
 from django.db.models import Count
 from django.core.serializers import serialize
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
@@ -16,6 +16,7 @@ from case.models import CaseCategory, CyberCaseCategories,Case, Witness
 
 from citizen.models import Citizen
 from .forms import UsersLoginForm,criminal_form
+from .forms import UsersRegisterForm
 
 from home.models import AnonymousTip
 
@@ -31,6 +32,8 @@ def login_view(request):
         login(request, user)
         return redirect("/police/dashboard")
     return render(request, "police/login.html", {"form": form})
+
+
 
 
 
@@ -51,7 +54,7 @@ def get_case_categories(request):
 
 
 def dashboard(request):
-    if not request.user.is_authenticated() or not str(request.user.__class__.__name__)=="Police":
+    if not request.user.is_authenticated or not str(request.user.__class__.__name__)=="Police":
         raise Http404
 
 
@@ -67,15 +70,15 @@ def dashboard(request):
     cvqset={}
     d=CaseCategory.objects.all()
     cvsum=0
-  
-    
+
+
     for i in d:
         cvqset[i.name]=Case.objects.filter(case_categories=i).count()
         cvsum=cvsum+cvqset[i.name]
 
     cvsolved=Case.objects.filter(cyber_case_categories=None,solved=True).count()
     cysolved=Case.objects.filter(case_categories=None,solved=True).count()
-    
+
     cyqset={}
     cysum=0
     d=CyberCaseCategories.objects.all()
@@ -121,7 +124,7 @@ def dashboard(request):
     "cysum":cysum,
     "cvsolved":cvsolved,
     "cysolved":cysolved,
-    
+
 
 
 
@@ -130,7 +133,7 @@ def dashboard(request):
 
 
 def cbcview(request,id=None):
-    if not request.user.is_authenticated():
+    if not request.user.is_authenticated:
         raise Http404
     my_object = get_object_or_404(CaseCategory, pk=id)
     cases_qset=Case.objects.filter(case_categories=my_object )
@@ -220,7 +223,7 @@ def case_detail(request,id=None,approved=None):
     doculist={}
     others={}
     for i in files:
-        
+
 
         if is_image(get_last(i.evidence.name)):
             imglist[get_last(i.evidence.name)]=i.evidence.url
@@ -228,10 +231,10 @@ def case_detail(request,id=None,approved=None):
 
         elif is_audio(get_last(i.evidence.name)):
             audlist[get_last(i.evidence.name)]=i.evidence.url
-        
+
         elif is_video(get_last(i.evidence.name)):
             vidlist[get_last(i.evidence.name)]=i.evidence.url
-        
+
         elif is_docu(get_last(i.evidence.name)):
             doculist[get_last(i.evidence.name)]=i.evidence.url
 
@@ -240,18 +243,18 @@ def case_detail(request,id=None,approved=None):
             others[get_last(i.evidence.name)]=i.evidence.url
 
 
-        
-    
+
+
 
     print(others)
     context={"my_object":my_object,"wqset":wqset, "ward_object": ward_object, "police_id": police_id, "comments": comments,'files':files,"imglist":imglist,"vidlist":vidlist,"audlist":audlist,"doculist":doculist,"others":others}
     return render(request,'police/case_detail.html',context)
 
 def atip_detail(request,id=None):
-    if not request.user.is_authenticated():
+    if not request.user.is_authenticated:
         raise Http404
     my_object = get_object_or_404(AnonymousTip, id=id)
-    
+
     context={"my_object":my_object}
     return render(request,'police/atip_detail.html',context)
 
@@ -279,7 +282,7 @@ def person_detail_view(request,id=None):
     detail_flag=1
     d64={}
     data={}
- 
+
     data = b(b_id)
     print(data)
 
@@ -289,14 +292,14 @@ def person_detail_view(request,id=None):
 
     try:
 
-        string="https://apitest.sewadwaar.rajasthan.gov.in/app/live/Service/hofMembphoto/%s/%s?client_id=%s" % (str(data['BHAMASHAH_ID']),str(data['M_ID']),config('client_id'))  
+        string="https://apitest.sewadwaar.rajasthan.gov.in/app/live/Service/hofMembphoto/%s/%s?client_id=%s" % (str(data['BHAMASHAH_ID']),str(data['M_ID']),config('client_id'))
         with urllib.request.urlopen(string) as url:
             d64=json.loads(url.read().decode())
         d64=d64["hof_Photo"]["PHOTO"]
     except:
         photo_flag=0
 
-       
+
 
     context={
 
@@ -307,7 +310,7 @@ def person_detail_view(request,id=None):
 
 
     }
-  
+
 
 
 
@@ -336,9 +339,23 @@ def create_criminal_details(request):
 
 
 def atips(request):
-    if not request.user.is_authenticated():
+    if not request.user.is_authenticated:
         raise Http404
     aqset = AnonymousTip.objects.all()
     context={"aqset":aqset}
     return render(request,'police/atips.html',context)
 
+def register_view(request):
+    form = UsersRegisterForm(request.POST or None)
+    print(form)
+    if form.is_valid():
+        print('form validated successfully')
+        user = form.save()
+        username = form.cleaned_data.get("username")
+        password = form.cleaned_data.get("password")
+        user.set_password(password)
+        user.save()
+        new_user = authenticate(username=username, password=password)
+        login(request, new_user)
+        return redirect("/police/dashboard")
+    return render(request, "police/register.html",{"form" : form})

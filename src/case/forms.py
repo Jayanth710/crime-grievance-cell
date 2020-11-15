@@ -106,6 +106,6 @@ class cyber_case_form(forms.ModelForm):
     # incident_time = models.DateTimeField()
     # approved=models.BooleanField()
     # solved=models.BooleanField()
-    
+
     # timestamp = models.DateTimeField(auto_now_add=True)
     # updated = models.DateTimeField(auto_now=True)

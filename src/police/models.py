@@ -34,9 +34,9 @@ designation_choice = (
 
 
 class Police(User):
-    police_id = models.CharField(max_length=20)
-    designation = models.CharField(max_length=10, choices=designation_choice, null=True)
-    ward = models.ForeignKey('Ward', null=True)
+    police_id = models.CharField(max_length=255)
+    designation = models.CharField(max_length=255, choices=designation_choice, null=True)
+    ward= models.ForeignKey('Ward',on_delete=models.PROTECT,null=False)
     birth_date = models.DateField(null=True, blank=True)
 
     class Meta:
@@ -48,6 +48,7 @@ class Police(User):
 
 ward_choice = (
 ('RJ14W01','Mansarovar'),
+('HYD01w1','kapra'),
 ('RJ14W02','Jagatpura'),
 ('RJ14W03','Sanganer'),
 ('RJ14W04','Kachi Basti'),
@@ -58,6 +59,7 @@ ward_choice = (
 ('RJ14W09','Triveni Nagar'),
 ('RJ14W10','Badi Chopat'),
 ('RJ14W11','Chandpole'),
+('HYD01w2','Madhapur'),
 
 )
 
@@ -65,7 +67,7 @@ ward_choice = (
 
 
 class Ward(models.Model):
-    id = models.CharField(max_length=10, primary_key=True, choices=ward_choice)  # eg: RJ01w1,RJ01w2,RJ15w5
+    id = models.CharField(max_length=255, primary_key=True, choices=ward_choice)  # eg: RJ01w1,RJ01w2,RJ15w5
     address = models.CharField(max_length=255, blank=False)
 
     def get_contacts(self):
@@ -77,7 +79,7 @@ class Ward(models.Model):
 
 
 class Contact(models.Model):
-    ward = models.ForeignKey('ward')
+    ward = models.ForeignKey('ward',on_delete=models.PROTECT)
     contact = models.CharField(max_length=255, blank=False)
 
     def __str__(self):
@@ -93,7 +95,7 @@ class Criminal(models.Model):
     father_name = models.CharField(max_length=255)
     age = models.IntegerField()
     caste = models.CharField(max_length=255)
-    ward=models.ForeignKey(Ward,null=True)
+    ward=models.ForeignKey(Ward,null=True,on_delete=models.PROTECT)
     birth_mark_desc=models.TextField()
     height=models.CharField(max_length=255)
     complexion=models.CharField(max_length=255)

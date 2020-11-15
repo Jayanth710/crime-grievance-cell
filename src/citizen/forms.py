@@ -36,9 +36,12 @@ class UsersRegisterForm(forms.ModelForm):
     class Meta:
         model = Citizen
         fields = [
-        'bhamashah',
+        #'bhamashah',
             'aadhaar',
-            'bhamashah',
+            'username',
+            'first_name',
+            'last_name',
+            #'bhamashah',
             'contact',
             "email",
             "confirm_email",
@@ -76,20 +79,20 @@ class UsersRegisterForm(forms.ModelForm):
         password = self.cleaned_data.get("password")
         confirm_password = self.cleaned_data.get("confirm_password")
         aadhaar = self.cleaned_data.get("aadhaar")
-        bhamashah = self.cleaned_data.get("bhamashah")
+        #bhamashah = self.cleaned_data.get("bhamashah")
 
 
-        data = b(bhamashah)
-        print(data)
+        #data = b(bhamashah)
+        #print(data)
 
 
 
-        if data is not None and 'AADHAR_ID' in data:
+        '''if data is not None and 'AADHAR_ID' in data:
             if aadhaar != data['AADHAR_ID']:
                 raise forms.ValidationError('Entered Aadhaar ID does not matched with Aadhaar associalted to this Bhamashah Card')
         else:
             raise forms.ValidationError(
-                'Unknown Error Occured!')
+                'Unknown Error Occured!')'''
 
         if email != confirm_email:
             raise forms.ValidationError("Email must match")
@@ -144,6 +147,3 @@ class UsersRegisterForm(forms.ModelForm):
 #             raise forms.ValidationError(
 #                 'Unknown Error Occured!')
 #
-
-
-

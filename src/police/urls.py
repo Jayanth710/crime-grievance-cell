@@ -6,6 +6,7 @@ urlpatterns = [
     url(r'^$', login_view , name='login'),
     url(r'^dashboard/$', dashboard , name='police_dashboard'),
 	url(r'^logout/$', police_logout , name='police_logout'),
+    url(r'^register$', register_view , name='login'),
 
 	url(r'^cbc/(?P<id>\d+)/$', cbcview , name='cbc'),
 	url(r'^cybercbc/(?P<id>\d+)/$', cybercbcview , name='cybercbc'),

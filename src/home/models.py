@@ -21,9 +21,9 @@ class AnonymousUser(User):
 
 
 class AnonymousTip(models.Model):
-    title = models.CharField(max_length=80, blank=False)
+    title = models.CharField(max_length=255, blank=False)
     description = models.TextField()
-    userid = models.ForeignKey(AnonymousUser,null=True,blank=True)
+    userid = models.ForeignKey(AnonymousUser,null=True,blank=True,on_delete=models.PROTECT)
     timestamp = models.DateTimeField(auto_now_add=True)
     incident_time = models.DateField()
     updated = models.DateTimeField(auto_now=True)
@@ -34,16 +34,16 @@ class AnonymousTip(models.Model):
         return self.title
 
     def get_absolute_url(self):
-    
+
         return reverse("atip_detail",kwargs={"id":self.id})
-    
+
 
 class Evidence(models.Model):
         image1 = models.ImageField(upload_to=evidence_upload_location, blank = True)
         image2 =  models.ImageField(upload_to=evidence_upload_location, blank = True)
         doc =  models.FileField(upload_to=evidence_upload_location, blank = True)
         video =  models.FileField(upload_to=evidence_upload_location, blank = True)
-        anonymous_tip = models.ForeignKey(AnonymousTip,null=True,blank=True)
+        anonymous_tip = models.ForeignKey(AnonymousTip,null=True,blank=True,on_delete=models.PROTECT)
 
         def __str__(self):
             return str(self.id)
