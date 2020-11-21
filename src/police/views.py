@@ -16,7 +16,7 @@ from case.models import CaseCategory, CyberCaseCategories,Case, Witness
 
 from citizen.models import Citizen
 from .forms import UsersLoginForm,criminal_form
-from .forms import UsersRegisterForm
+#from .forms import UsersRegisterForm
 
 from home.models import AnonymousTip
 
@@ -304,7 +304,8 @@ def atip_detail1(request,id=None,approved=None):
                     doculist[get_last(i.doc.name)]=i.doc.url
 
 
-
+        if is_video(get_last(i.video.name)):
+            vidlist[get_last(i.video.name)]=i.video.url
 
 
     print(others)

@@ -26,7 +26,7 @@
 
 
         <li><a href="{% url 'create_case' %}"><i class="fa fa-share"></i> Report Civilian Crime <span class=""></span></a></li>
-        <li><a href="{% url 'create_cyber_case' %}"><i class="fa fa-desktop"></i>Report Cyber Crime <span class=""></span></a><!-- 
+        <li><a href="{% url 'create_cyber_case' %}"><i class="fa fa-desktop"></i>Report Cyber Crime <span class=""></span></a><!--
           <ul class="nav child_menu">
             <li><a href="general_elements.html">Report Crime</a></li>
             <li><a href="media_gallery.html">FAQ</a></li>
@@ -35,19 +35,19 @@
 
          <ul class="nav child_menu">
             <li><a href="{% url 'cbcview' 0 %}">All</a></li>
-          
+
             <li><a href="{% url 'cbcview' 1 %}">Civilian Cases</a></li>
             <li><a href="{% url 'cbcview' 2 %}">Cyber Cases</a></li>
             <li><a href="{% url 'cbcview' 3 %}">Cases Solved</a></li>
             <li><a href="{% url 'cbcview' 4 %}">Cases Pending For Approval</a></li>
-          
+
           </ul>
 
 
         </li>
 
 
-        <li><a href="{{request.user.get_absolute_url }}"><i class="fa fa-user"></i> Profile <span class=""></span></a>
+        <li><a href="/citizen/dashboard"><i class="fa fa-user"></i> Profile <span class=""></span></a>
           <!-- <ul class="nav child_menu">
             <li><a href="general_elements.html">View Profile</a></li>
             <li><a href="media_gallery.html">Change Password</a></li>
