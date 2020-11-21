@@ -64,6 +64,7 @@ def dashboard(request):
     approved_cases_count=Case.objects.filter(approved=True).count()
     solved_cases_count=Case.objects.filter(solved=True).count()
     pending_cases_count=total_cases_count-approved_cases_count
+    approved_cases_count=total_cases_count-solved_cases_count
 
     pqset=Police.objects.filter(ward=request.user.ward)
 
@@ -144,7 +145,7 @@ def cbcview(request,id=None):
 
 
 def cybercbcview(request,id=None):
-    if not request.user.is_authenticated():
+    if not request.user.is_authenticated:
         raise Http404
     my_cyber_object = get_object_or_404(CyberCaseCategories, pk=id)
     cyber_cases_qset=Case.objects.filter(cyber_case_categories=my_cyber_object )
@@ -204,19 +205,26 @@ def is_docu(value):
 
 
 def case_detail(request,id=None,approved=None):
-    if not request.user.is_authenticated():
+    if not request.user.is_authenticated:
         raise Http404
     app=approved
     comments = Comment.objects.filter(case = id)
     my_object = get_object_or_404(Case, id=id)
     if app=='1':
         my_object.approved=True
-        print("yppppppppppppppp")
+        print("approved")
         my_object.save()
+    elif app=='2':
+        my_object.solved=True
+
+        my_object.save()
+
     wqset=Witness.objects.filter(case=my_object)
     ward_object=request.user.ward
     police_id = request.user.id
+    print(my_object)
     files = my_object.evidence_set.all()
+    print(files)
     imglist={}
     vidlist={}
     audlist={}
@@ -257,6 +265,52 @@ def atip_detail(request,id=None):
 
     context={"my_object":my_object}
     return render(request,'police/atip_detail.html',context)
+def atip_detail1(request,id=None,approved=None):
+    print(id)
+    if not request.user.is_authenticated:
+        raise Http404
+    app=approved
+    #comments = Comment.objects.filter(case = id)
+    my_object = get_object_or_404(AnonymousTip, id=id)
+    if app=='1':
+        my_object.approved=True
+        print("approved")
+        my_object.save()
+    #wqset=Witness.objects.filter(case=my_object)
+    #ward_object=request.user.ward
+    #police_id = request.user.
+    print(my_object)
+    files = my_object.evidence_set.all()
+    print(files)
+
+    imglist={}
+    vidlist={}
+    audlist={}
+    doculist={}
+    others={}
+    for i in files:
+
+
+        if is_image(get_last(i.image1.name)):
+            imglist[get_last(i.image1.name)]=i.image1.url
+
+
+        if is_image(get_last(i.image2.name)):
+                imglist[get_last(i.image2.name)]=i.image2.url
+
+
+
+        if is_docu(get_last(i.doc.name)):
+                    doculist[get_last(i.doc.name)]=i.doc.url
+
+
+
+
+
+    print(others)
+    context={"my_object":my_object,'files':files,"imglist":imglist,"vidlist":vidlist,"audlist":audlist,"doculist":doculist,"others":others}
+    return render(request,'police/case_detail.html',context)
+
 
 def b(b_id):
     try:

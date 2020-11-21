@@ -24,6 +24,9 @@ def gen_uname_pass():
 
 def upload_evidence(request,id=None):
     tip = get_object_or_404(AnonymousTip,pk=id)
+    print("hi")
+    print(tip)
+    print("hi")
     if not request.user.is_authenticated:
         raise Http404
 
@@ -36,6 +39,7 @@ def upload_evidence(request,id=None):
     print(form)
     if form.is_valid():
         instance = form.save(commit = False)
+        print(instance)
         instance.anonymous_tip = tip
         instance.save()
         messages.success(request,'Evidence Uploaded Successfully')

@@ -30,7 +30,7 @@
       </div>
 
       <div class="clearfix"></div>
-        
+
         {% for obj in aqset %}
 
         <div class="col-md-12 col-sm-12 col-xs-12">
@@ -40,9 +40,9 @@
                 </li>
               </ul>
               <h2><i class="fa fa-forward"></i><a href="{{ obj.get_absolute_url }}"> {{ obj.title }} </a><!-- <small>Float left</small> --></h2>
-  
-  
-        
+
+
+
             <div class="x_content">
 
 
@@ -52,7 +52,7 @@
                   </li>
                   <li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Last updated</a>
                   </li>
-                 
+
                 </ul>
                 <div id="myTabContent" class="tab-content">
                   <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab" style="min-height: 60px;">
@@ -61,7 +61,7 @@
                   <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
                     <p>{{ obj.updated }}</p>
                   </div>
-                  
+
                 </div>
               </div>
           </div>
@@ -71,7 +71,7 @@
                   <p><b>Tipped on:</b> {{obj.timestamp}} |
                   <b>Related Incident Occurence Time:</b> {{obj.incident_time}}</p>
                 </div>
-              </div>  
+              </div>
             </div>
 
 
@@ -80,7 +80,7 @@
 
 
 {% endfor %}
-       
+
  </div> </div> </div> </div>
     </div>
     <div class="clearfix"></div>

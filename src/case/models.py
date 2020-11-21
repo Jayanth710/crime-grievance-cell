@@ -9,6 +9,7 @@ t = str(t.year) + '/' + str(t.month) + '/' + str(t.day)
 
 
 def evidence_upload_location(instance,filename):
+
     return '%s/%s/%s' % ( t ,  instance.case.id, filename)
 
 class CaseCategory(models.Model):
@@ -33,11 +34,24 @@ class CyberCaseCategories(models.Model):
     def __str__(self):
         return self.name
 
+'''class MunicipalCategories(models.Model):
+    name = models.CharField(max_length=255, blank=False)
+
+    class Meta:
+        verbose_name_plural = 'Municipal grievance Categories'
+
+    def __str__(self):
+        return self.name'''
+
 
 class Evidence(models.Model):
     case = models.ForeignKey('Case', blank = True, null = True,on_delete=models.PROTECT)
     evidence = models.FileField(upload_to=evidence_upload_location)
     timestamp = models.DateTimeField(auto_now_add=True)
+
+    def get_absolute_url(self):
+
+        return reverse("case_detail",kwargs={"id":self.id})
 
 
 class Witness(models.Model):
@@ -54,6 +68,7 @@ class Case(models.Model):
     title = models.CharField(max_length=80, blank=False)
     case_categories = models.ForeignKey(CaseCategory,null=True,blank=True,on_delete=models.PROTECT)
     cyber_case_categories = models.ForeignKey(CyberCaseCategories,null=True,blank=True,on_delete=models.PROTECT)
+    #municipal_categories=models.ForeignKey(MunicipalCategories,null=True,blank=True,on_delete=models.PROTECT)
     description = models.TextField()
     reg_from_loc = models.CharField(max_length=255, blank=False)
     userid = models.ForeignKey(Citizen,null=True,on_delete=models.PROTECT)

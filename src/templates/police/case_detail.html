@@ -111,12 +111,16 @@
                     <div class="mail_heading row">
                       <div class="col-md-8">
                         <div class="btn-group">
-                          {% if my_object.approved %}
+                          {%if my_object.solved%}
+                              <button class="btn btn-sm btn-danger" type="button" style="color:green"><i class="fa fa-star"></i> Solved</button>
 
-                          <button class="btn btn-sm btn-danger" type="button"><i class="fa fa-star"></i> Approved</button>
+                              {% elif my_object.approved %}
+
+                            <a href="/police/case_detail/{{my_object.id}}/2/"><button class="btn btn-sm btn-danger" type="button"><i class="fa fa-star"></i> Solve</button></a>
                           {% else %}
                           <a href="/police/case_detail/{{my_object.id}}/1/"><button class="btn btn-sm btn-primary" type="button"><i class="fa fa-check"></i> Approve</button></a>
                           {% endif %}
+
                           <a href="#comments">
                           <button class="btn btn-sm btn-default" type="button"  data-placement="top" data-toggle="tooltip" data-original-title="Comment"><i class="fa fa-comments-o"></i></button></a>
 
@@ -215,7 +219,7 @@
 
 
 
-<!-- 
+<!--
                 {% for i in files %}
                 <li>
                   <div class="file-name">
@@ -352,7 +356,7 @@
 
   {{ block.super }}
 <script type="text/javascript">
-  
+
 function scrollToElement(ref)
 {
 
@@ -363,7 +367,7 @@ function scrollToElement(ref)
 
 function imgfun(id)
 {
-      
+
 if ( document.getElementById(id).classList.contains('fa-chevron-down') )
  {
      document.getElementById(id).classList.remove('fa-chevron-down');
@@ -371,7 +375,7 @@ if ( document.getElementById(id).classList.contains('fa-chevron-down') )
      document.getElementById(id).classList.add('fa-chevron-up');
 
 
- } 
+ }
 
 else if ( document.getElementById(id).classList.contains('fa-chevron-up') )
 
@@ -382,11 +386,11 @@ else if ( document.getElementById(id).classList.contains('fa-chevron-up') )
 
 
 }
-  
+
 
 
 }
 
 </script>
-  
+
 {% endblock javascripts %}

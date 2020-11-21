@@ -6,7 +6,6 @@ urlpatterns = [
     url(r'^$', login_view , name='login'),
     url(r'^dashboard/$', dashboard , name='police_dashboard'),
 	url(r'^logout/$', police_logout , name='police_logout'),
-    url(r'^register$', register_view , name='login'),
 
 	url(r'^cbc/(?P<id>\d+)/$', cbcview , name='cbc'),
 	url(r'^cybercbc/(?P<id>\d+)/$', cybercbcview , name='cybercbc'),
@@ -20,6 +19,8 @@ urlpatterns = [
 
 	url(r'^atips/$', atips , name='atips'),
 	url(r'^atip_detail/(?P<id>\d+)/$', atip_detail, name='atip_detail'),
+    url(r'^atip_detail1/(?P<id>\d+)/(?P<approved>\d+)/$', atip_detail1, name='atip_detail'),
+
 
 
 ]

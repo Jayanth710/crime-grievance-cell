@@ -1,4 +1,4 @@
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from django.shortcuts import render
 from django.contrib.auth import logout
 
@@ -9,6 +9,10 @@ from case.forms import *
 from .forms import UsersRegisterForm
 from .models import Citizen,Citizen1
 from police.views import *
+from case.forms import EvidenceForm
+from case.models import Case
+from django.contrib import messages
+
 
 
 def login_view(request):
@@ -27,14 +31,24 @@ def login_view(request):
 def dashboard(request):
     if not request.user.is_authenticated:
         return redirect("/citizen")
+    id=request.GET.get('id')
+    my_object = get_object_or_404(Citizen, pk=request.user.id)
+    print("hi")
+    print(my_object)
+    print("bye")
+
+
+    # print(cases_qset)
+
+    #my_object = get_object_or_404(Citizen, pk=id)
 
     total=Case.objects.filter(userid=request.user).count()
     pending=Case.objects.filter(userid=request.user,approved=False).count()
     solved=Case.objects.filter(userid=request.user,solved=True).count()
-    inprogress=Case.objects.filter(userid=request.user,approved=True,solved=False).count()
-
-
-    context={'citizen':request.user,"total":total,"pending":pending,"solved":solved,"inprogress":inprogress}
+    inprogress=Case.objects.filter(userid=request.user,approved=True).count()
+    inprogress=inprogress-solved
+    pending=total-inprogress-solved
+    context={'citizen':request.user,"total":total,"pending":pending,"solved":solved,"inprogress":inprogress,"my_object":my_object}
     return render(request,'citizen/dashboard.html',context)
 
 
@@ -42,6 +56,27 @@ def citizen_logout(request):
     logout(request)
 
     return redirect("/")
+def evidence12(request):
+    id=request.GET.get('id')
+    case = get_object_or_404(Case,pk=id)
+    print(case)
+    if not request.user.is_authenticated:
+        raise Http404
+        #return redirect("/citizen")
+
+
+
+    form = EvidenceForm(request.POST or None, request.FILES or None)
+    print(form)
+    if form.is_valid():
+        instance = form.save(commit = False)
+        print(instance)
+        instance.case=case
+        instance.save()
+        messages.success(request,'Evidence Uploaded Successfully')
+        return redirect('/citizen/dashboard')
+
+    return render(request, "citizen/case.html", {"form": form})
 
 def create_case(request):
     if not request.user.is_authenticated:
@@ -51,6 +86,7 @@ def create_case(request):
         instance=form.save(commit=False)
         instance.save()
         return redirect("/citizen/dashboard")
+        #return redirect('/citizen/evidence12.html')
     return render(request, "citizen/case.html", {"form": form})
 
 
@@ -64,7 +100,8 @@ def cbcview(request,sel=None):
     if not request.user.is_authenticated:
         return redirect("/citizen")
     my_object = get_object_or_404(Citizen, pk=request.user.id)
-
+    print("bye")
+    print(my_object)
     if int(sel)==0:
         cases_qset=Case.objects.filter(userid=my_object)
     elif int(sel)==1:
@@ -86,10 +123,11 @@ def cbcview(request,sel=None):
 from comment.models import Comment
 
 def user_case_detail(request,id=None):
-    if not request.user.is_authenticated():
+    if not request.user.is_authenticated:
         return redirect("/citizen")
     comments = Comment.objects.filter(case = id)
     my_object = get_object_or_404(Case, id=id)
+    print(my_object)
 
     wqset=Witness.objects.filter(case=my_object)
 

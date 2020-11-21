@@ -1,5 +1,8 @@
 from django import forms
 from .models import Case
+from django.forms import ModelForm
+from .models import Evidence
+
 
 # ward_choice = (
 # ('RJ14W01','Mansarovar'),
@@ -48,6 +51,29 @@ class case_form(forms.ModelForm):
         self.fields['incident_time'].widget.attrs.update({
             'class': 'form-control',
             "name":"incident_time"})
+
+
+
+
+
+class EvidenceForm(ModelForm):
+    class Meta:
+        model = Evidence
+        fields = "__all__"
+        exclude = ['case','timestamp']
+
+        def __init__(self, *args, **kwargs):
+            super(case_form, self).__init__(*args, **kwargs)
+            self.fields['evidence'].widget.attrs.update({
+                'class' : 'form-control',
+                "name"  : "evidence"})
+
+
+
+
+
+
+
 
 
 

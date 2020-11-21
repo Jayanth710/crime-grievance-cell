@@ -22,6 +22,7 @@
       <div class="page-title">
         <div class="title_left">
           <h3>CASE {{ my_object.id }} Details</small></h3>
+            <a href="/citizen/evidence12?id={{my_object.id}}">Add Evidence {{my_object.id}}</a>
         </div>
 
 
@@ -58,14 +59,14 @@
                       <div class="right">
                         <h3>Filed By</h3>
                          <ul>
-                        <li><p><span class="badge">Name :</span> {{my_object.userid.get_full_name}}</p> </li>
+                        <li><p><span class="badge">Name :</span> {{my_object.userid.username}}</p> </li>
                           <li><p><span class="badge">DOB :</span> {{ my_object.userid.birth_date }}</p> </li>
 
                         <li><p><span class="badge">Email :</span> {{ my_object.userid.email }}</p> </li>
                         <li><p><span class="badge">Contact :</span> {{ my_object.userid.contact }}</p> </li>
 
                         <li><p><span class="badge">Aadhaar Id :</span> {{ my_object.userid.aadhaar }}</p> </li>
-<li><p><span class="badge">Bamashah Id :</span> {{ my_object.userid.bhamashah }}</p> </li>
+<!--<li><p><span class="badge">Bamashah Id :</span> {{ my_object.userid.bhamashah }}</p> </li>-->
                         <li><p><span class="badge">Last Active :</span> {{ my_object.userid.last_login }}</p> </li>
 
                          </ul>
@@ -80,6 +81,7 @@
                         <i class="fa fa-circle-o"></i><i class=""></i>
                       </div>
                       <div class="right">
+
                         <h3>Associated Witnesses </h3>
 
                         {% for obj in wqset %}
@@ -108,7 +110,7 @@
                 <!-- CONTENT MAIL -->
                 <div class="col-sm-9 mail_view">
                   <div class="inbox-body">
-                    
+
 
                     <div class="mail_heading row">
                       <div class="col-md-8">
@@ -117,20 +119,20 @@
 
                           {% if my_object.solved %}
 
-                                                    
+
 
                           <button class="btn btn-sm btn-success" type="button"><i class="fa fa-check"></i> Solved</button>
-                          
+
                           {% else %}
-                          
+
                           <button class="btn btn-sm btn-info" type="button"><i class="fa fa-star"></i>Approved and Investigation in Progress</button>
-                          
+
                           {% endif %}
 
 
                           {% else %}
                           <button class="btn btn-sm btn-danger" type="button"><i class="fa fa-clock-o"></i> Pending for approval</button>
-                          
+
 
                           {% endif %}
 
@@ -150,7 +152,7 @@
 
 
 
-                    
+
                     <!-- <div class="sender-info">
                       <div class="row">
                         <div class="col-md-12">
@@ -237,7 +239,7 @@
 
 
 
-<!-- 
+<!--
                 {% for i in files %}
                 <li>
                   <div class="file-name">
@@ -374,7 +376,7 @@
 
   {{ block.super }}
 <script type="text/javascript">
-  
+
 function scrollToElement(ref)
 {
 
@@ -385,7 +387,7 @@ function scrollToElement(ref)
 
 function imgfun(id)
 {
-      
+
 if ( document.getElementById(id).classList.contains('fa-chevron-down') )
  {
      document.getElementById(id).classList.remove('fa-chevron-down');
@@ -393,7 +395,7 @@ if ( document.getElementById(id).classList.contains('fa-chevron-down') )
      document.getElementById(id).classList.add('fa-chevron-up');
 
 
- } 
+ }
 
 else if ( document.getElementById(id).classList.contains('fa-chevron-up') )
 
@@ -404,11 +406,11 @@ else if ( document.getElementById(id).classList.contains('fa-chevron-up') )
 
 
 }
-  
+
 
 
 }
 
 </script>
-  
+
 {% endblock javascripts %}

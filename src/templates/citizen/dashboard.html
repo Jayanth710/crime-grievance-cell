@@ -1,4 +1,5 @@
 {% extends "citizen/base_site.html" %}
+{% load get_last %}
 
 {% block title %} User Dashboard {% endblock title %}
 
@@ -47,41 +48,57 @@
           <div class="x_panel">
             <div class="x_title">
               <h2>Here are the wards that are handling your cases : <small></small></h2>
-            
+
               <div class="clearfix"></div>
             </div>
             <div class="x_content">
               <div class="col-md-9 col-sm-12 col-xs-12">
                 <div class="demo-container" style="height:280px">
-        
 
-<iframe
+                  <div class="right">
+                    <h3>User Details</h3>
+                     <ul>
+                    <li><p><span class="badge">Name :</span> {{my_object}}</p> </li>
+                      <li><p><span class="badge">DOB :</span> {{ my_object.birth_date }}</p> </li>
+
+                    <li><p><span class="badge">Email :</span> {{ my_object.email }}</p> </li>
+                    <li><p><span class="badge">Contact :</span> {{ my_object.contact }}</p> </li>
+
+                    <li><p><span class="badge">Aadhaar Id :</span> {{ my_object.aadhaar }}</p> </li>
+<!--<li><p><span class="badge">Bamashah Id :</span> {{ my_object.userid.bhamashah }}</p> </li>-->
+                    <li><p><span class="badge">Last Active :</span> {{ my_object.last_login }}</p> </li>
+
+                     </ul>
+                  </div>
+
+
+<!--<iframe
   width="600"
   height="450"
   frameborder="0" style="border:0"
   src="http://utrim.me/ndiev1" allowfullscreen>
-</iframe>
+</iframe>-->
 
 
 
-<!-- 
-  <h2>Solved/Total :: CASES <small></small></h2> 
+<!--
+  <h2>Solved/Total :: CASES <small></small></h2>
       -->           <div class="tiles">
-                  <div class="col-md-4 tile"><!-- 
+                  <div class="col-md-4 tile"><!--
                     <span>Civilian Cases</span>
                     <h2>{{cvsolved}} / {{cvsum}}</h2>
                     <span class="sparkline11 graph" style="height: 160px;">
                          <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
                     </span> -->
                   </div>
-                  <div class="col-md-4 tile"><!-- 
+                  <div class="col-md-4 tile"><!--
                     <span>Cyber Cases</span>
                     <h2>{{cysolved}} / {{cysum}}</h2>
                     <span class="sparkline22 graph" style="height: 160px;">
                           <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
                     </span> -->
                   </div>
- 
+
 
                 </div>
 
@@ -90,7 +107,7 @@
 
 
 
-<!-- 
+<!--
 
               <div class="col-md-3 col-sm-12 col-xs-12">
                 <div>
@@ -114,7 +131,7 @@
                     <div class="clearfix"></div>
                   </div>
                   <ul class="list-unstyled top_profiles scroll-view">
-                  
+
             {% for i,j in res %}
 
                     <li class="media event">
@@ -126,7 +143,7 @@
                         <p><strong>- {{j}} </strong> </p>
                       </div>
                     </li>
-               
+
             {% endfor %}
                   </ul>
                 </div>

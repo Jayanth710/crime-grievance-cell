@@ -13,5 +13,8 @@ urlpatterns = [
     url(r'^cbcview/(?P<sel>\d+)/$', cbcview , name='cbcview'),
 	url(r'^user_case_detail/(?P<id>\d+)/$', user_case_detail , name='user_case_detail'),
     url(r'^create_cyber_case/$', create_cyber_case , name='create_cyber_case'),
+    url(r'^evidence12/$', evidence12 , name='evidence12'),
+    url(r'^evidence12/(?P<id>\d+)/$', evidence12 , name='evidence12'),
+
 
 ]
