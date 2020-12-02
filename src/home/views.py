@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.shortcuts import render, redirect
 from .forms import AnonymousTipForm, AnonymousUsersLoginForm
-from police.models import Criminal
+from police.models import Criminal,Missing
 from .forms import EvidenceForm
 from home.models import Evidence
 from django.contrib import messages
@@ -114,3 +114,10 @@ def criminal_directory(request):
     if search_query:
         var = var.filter(name__contains=search_query)
     return render(request, "criminal_directory.html",{'var':var})
+def missing(request):
+    search_query = request.GET.get('q')
+    var = Missing.objects.all()
+    print(var)
+    if search_query:
+        var = var.filter(name__contains=search_query)
+    return render(request, "missing.html",{'var':var})

@@ -81,7 +81,10 @@ def evidence12(request):
 def create_case(request):
     if not request.user.is_authenticated:
         return redirect("/citizen")
+    my_object = get_object_or_404(Citizen, pk=request.user.id)
+    userid=request.user
     form = case_form(request.POST or None)
+
     if form.is_valid():
         instance=form.save(commit=False)
         instance.save()

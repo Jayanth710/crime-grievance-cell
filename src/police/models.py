@@ -125,6 +125,22 @@ class Criminal(models.Model):
     height=models.CharField(max_length=255)
     complexion=models.CharField(max_length=255)
     eyes=models.CharField(max_length=255)
+    img = models.ImageField(upload_to='pics',null=True)
+
+    def __str__(self):
+        return self.name
+
+class Missing(models.Model):
+    name = models.CharField(max_length=255, blank=False)
+    father_name = models.CharField(max_length=255)
+    age = models.IntegerField()
+    Area = models.CharField(max_length=255)
+    description=models.CharField(max_length=255)
+    birth_mark_desc=models.TextField()
+    height=models.CharField(max_length=255)
+    complexion=models.CharField(max_length=255)
+    eyes=models.CharField(max_length=255)
+    img = models.ImageField(upload_to='pics',null=True)
 
     def __str__(self):
         return self.name

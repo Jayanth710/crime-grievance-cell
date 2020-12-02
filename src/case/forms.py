@@ -2,6 +2,9 @@ from django import forms
 from .models import Case
 from django.forms import ModelForm
 from .models import Evidence
+from django.shortcuts import render, redirect,get_object_or_404
+from citizen.models import Citizen
+
 
 
 # ward_choice = (
@@ -18,6 +21,35 @@ from .models import Evidence
 # ('RJ14W11','Chandpole'),
 
 # )
+ward_choice = (
+('HYD01w1','Kapra'),
+('HYD01w2','Uppal'),
+('HYD01w3','Hayathnagar'),
+('HYD01w4','L.B Nagar'),
+('HYD01w5','Saroornagar'),
+('HYD02w6','Malakpet'),
+('HYD02w7','Santhosh Nagar'),
+('HYD02w8','Chandrayangutta'),
+('HYD02w9','Charminar'),
+('HYD02w10','Falaknuma'),
+('HYD02w11','Rajendra nagar'),
+('HYD03w12','Mehdipatnam'),
+('HYD03w13','Karwan'),
+('HYD03w14','Goshamahal'),
+('HYD03w15','Khairathabad'),
+('HYD03w16','Jubilee Hills'),
+('HYD04w17','Amberpet'),
+('HYD04w18','Musheerabad'),
+('HYD04w19','Malkajgiri'),
+('HYD04w20','Secunderabad'),
+('HYD04w21','Begumpet'),
+('HYD05w22','Yusufguda'),
+('HYD05w23','Serilingampelli'),
+('HYD05w24','Chandannagar'),
+('HYD05w25','Patancheru'),
+
+
+)
 
 
 
@@ -29,7 +61,7 @@ class case_form(forms.ModelForm):
         model=Case
         fields="__all__"
         exclude = ['cyber_case_categories','approved','updated','timestamp','solved']
-
+        #my_object = get_object_or_404(Citizen, pk=request.user.id)
     def __init__(self, *args, **kwargs):
         super(case_form, self).__init__(*args, **kwargs)
         self.fields['title'].widget.attrs.update({
@@ -84,6 +116,7 @@ class cyber_case_form(forms.ModelForm):
         model=Case
         fields="__all__"
         exclude = ['case_categories','approved','updated','timestamp','solved']
+
 
     def __init__(self, *args, **kwargs):
         super(cyber_case_form, self).__init__(*args, **kwargs)

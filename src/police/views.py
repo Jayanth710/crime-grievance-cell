@@ -60,11 +60,14 @@ def dashboard(request):
 
     ward_object=request.user.ward
 
-    total_cases_count=Case.objects.all().count()
-    approved_cases_count=Case.objects.filter(approved=True).count()
-    solved_cases_count=Case.objects.filter(solved=True).count()
-    pending_cases_count=total_cases_count-approved_cases_count
-    approved_cases_count=total_cases_count-solved_cases_count
+    total_cases_count=Case.objects.filter(ward_id=request.user.ward).count()
+    approved_cases_count=Case.objects.filter(ward_id=request.user.ward,approved=True).count()
+    solved_cases_count=Case.objects.filter(ward_id=request.user.ward,solved=True).count()
+    pending_cases_count=Case.objects.filter(ward_id=request.user.ward,approved=False).count()
+    print(approved_cases_count)
+    print(solved_cases_count)
+    approved_cases_count=approved_cases_count-solved_cases_count
+    pending_cases_count=total_cases_count-approved_cases_count-solved_cases_count
 
     pqset=Police.objects.filter(ward=request.user.ward)
 
